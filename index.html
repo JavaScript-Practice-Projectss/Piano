@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="styles.css">
+    <title>JS Challenge#01</title>
+  </head>
+  <body>
+    <section class="keys d-flex align-items-center ">
+      <div class="container d-flex justify-content-center align-items-center">
+        <div class="key m-3 d-flex flex-column" data-key="65">
+          <kbd>A</kbd>
+          <span class="sound">Clap</span>
+        </div>
+        <div class="key m-3 d-flex flex-column" data-key="83">
+          <kbd>S</kbd>
+          <span class="sound">hihat</span>
+        </div>
+        <div class="key m-3 d-flex flex-column" data-key="68">
+          <kbd>D</kbd>
+          <span class="sound">kick</span>
+        </div>
+        <div class="key m-3 d-flex flex-column" data-key="70">
+          <kbd>F</kbd>
+          <span class="sound">drum</span>
+        </div>
+        <div class="key m-3 d-flex flex-column" data-key="71">
+          <kbd>G</kbd>
+          <span class="sound">snare</span>
+        </div>
+        <div class="key m-3 d-flex flex-column" data-key="72">
+          <kbd>H</kbd>
+          <span class="sound">top</span>
+        </div>
+        <div class="key m-3 d-flex flex-column" data-key="73">
+          <kbd>I</kbd>
+          <span class="sound">tink</span>
+        </div>
+        <div class="key m-3 d-flex flex-column" data-key="74">
+          <kbd>J</kbd>
+          <span class="sound">ride</span>
+        </div>
+      </div>
+      <audio src="./mixkit-one-clap-481.wav" data-key="65"></audio>
+      <audio src="./mixkit-acute-guitar-single-string-2325.wav" data-key="83"></audio>
+      <audio src="./mixkit-air-whoosh-and-whistle-607.wav" data-key="68"></audio>
+      <audio src="./mixkit-drum-bass-hit-2294.wav" data-key="70"></audio>
+      <audio src="./mixkit-arcade-chiptune-explosion-1691.wav" data-key="71"></audio>
+      <audio src="./mixkit-car-horn-718.wav" data-key="72"></audio>
+      <audio src="./mixkit-writing-on-a-stone-3195.wav" data-key="73"></audio>
+      <audio src="./mixkit-flute-alert-2307.wav" data-key="74"></audio>
+    </section>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+   <script>
+    //to play music on keydown
+    function playmusic(e){
+      const audio = document.querySelector(`audio[data-key = "${e.keyCode}"]`); //selecting the audio whose data-key attributes value equals to the e.keycode (means the targeted keys code for example for A the krycode is 65 so audio[data-key = "65"])
+      const key = document.querySelector(`.key[data-key = "${e.keyCode}"]`); //selecting the element having .key class with the matching keyCode
+      if(!audio) return; //if there is no audio linked to the spacific key just return
+      audio.currentTime = 0; //restart audio from start
+      audio.play(); //paly audio
+      key.classList.add('playing'); //add the relavant styles on keydown
+    }
+
+//to remove the transition on pressing another key or after keyup
+    function removetransition(e){
+      if(e.propertyName !== 'transform') return;
+      this.classList.remove('playing');
+    }
+    const keys = document.querySelectorAll('.key');
+    keys.forEach(key1 => key1.addEventListener('transitionend', removetransition));
+    window.addEventListener('keydown', playmusic)
+   </script>
+  </body>
+</html>
